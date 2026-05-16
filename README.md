@@ -19,7 +19,16 @@ app/
     ├── _layout.tsx      # нижние табы (Main Page / About)
     ├── index.tsx        # главный экран — Welcome / кнопки / поля ввода
     ├── tasks.tsx        # экран «Список задач» (CRUD)
-    └── about.tsx        # экран «О приложении»
+    ├── about.tsx        # экран «О приложении»
+    ├── list.tsx         # SectionList с категориями
+    ├── dimension.tsx    # карточки A–D, row/column по ориентации
+    └── profile.tsx      # адаптивная карточка профиля
+
+hooks/
+  useOrientation.ts      # 'portrait' | 'landscape'
+
+components/
+  profile-card.tsx       # карточка профиля (Черниш Сергій)
 ```
 
 ## Запуск
@@ -41,7 +50,11 @@ npm run web         # Web
   - **валидация** — нельзя добавить пустую задачу (модалка «Помилка»);
   - **редактирование** задачи прямо в списке (кнопки «Зберегти» / «Скасувати»);
   - **удаление** с подтверждением (модалка «Видалити? Ви впевнені?»).
-- Нижние табы: **Main Page** и **About**.
+- Нижние табы: **Main Page**, **About**, **Lists**, **Dimensions**, **Profile**.
+- Экран **About**: анимированный список, изображение с адаптацией под ориентацию.
+- Экран **Lists**: `SectionList` с категориями в общей карточке.
+- Экран **Dimensions**: карточки A–D (колонка в портрете, ряд в ландшафте).
+- Экран **Profile**: адаптивная карточка профиля через хук `useOrientation()` — подробнее в [docs/profile-orientation-task.md](docs/profile-orientation-task.md).
 
 ## Скриншоты
 
@@ -80,3 +93,15 @@ npm run web         # Web
 После подтверждения задача удаляется из списка.
 
 ![Список после удаления](Readme/06-tasks-after-delete.png)
+
+### 7. Profile — портретная ориентация
+
+Аватар сверху, текст (Черниш Сергій, React Native Developer) снизу.
+
+![Profile — портрет](Readme/07-profile-portrait.png)
+
+### 8. Profile — ландшафтная ориентация
+
+Аватар слева, текст справа.
+
+![Profile — ландшафт](Readme/08-profile-landscape.png)
