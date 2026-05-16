@@ -57,6 +57,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="contacts"
+        options={{
+          href: null,
+          title: "Контакти",
+        }}
+      />
+      <Tabs.Screen
         name="tasks"
         options={{
           href: null,
