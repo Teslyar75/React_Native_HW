@@ -26,6 +26,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Дозвольте додатку доступ до контактів."
+        }
+      ],
       "expo-router",
       [
         "expo-splash-screen",

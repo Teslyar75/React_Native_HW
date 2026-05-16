@@ -8,6 +8,8 @@
 - React Native 0.81
 - React 19
 - [expo-router](https://docs.expo.dev/router/introduction/) — file-based роутинг
+- [expo-contacts](https://docs.expo.dev/versions/latest/sdk/contacts/) — чтение и запись контактов устройства
+- [expo-notifications](https://docs.expo.dev/versions/latest/sdk/notifications/) — локальные уведомления (на dev build; в Expo Go — Toast/Alert)
 - TypeScript
 
 ## Структура приложения
@@ -21,7 +23,7 @@ app/
     ├── tasks.tsx        # экран «Список задач» (CRUD)
     ├── about.tsx        # экран «О приложении»
     ├── list.tsx         # SectionList с категориями
-    ├── dimension.tsx    # карточки A–D, row/column по ориентации
+    ├── dimension.tsx    # уведомления, контакты (CRUD), карточки A–D
     └── profile.tsx      # адаптивная карточка профиля
 
 hooks/
@@ -53,8 +55,19 @@ npm run web         # Web
 - Нижние табы: **Main Page**, **About**, **Lists**, **Dimensions**, **Profile**.
 - Экран **About**: анимированный список, изображение с адаптацией под ориентацию.
 - Экран **Lists**: `SectionList` с категориями в общей карточке.
-- Экран **Dimensions**: карточки A–D (колонка в портрете, ряд в ландшафте).
-- Экран **Profile**: адаптивная карточка профиля через хук `useOrientation()` — подробнее в [docs/profile-orientation-task.md](docs/profile-orientation-task.md).
+- Экран **Dimensions**:
+  - кнопка **Notify** — локальное уведомление «Hello: World» (в Expo Go показывается Toast/Alert вместо системного push);
+  - кнопка **Get contact** — чтение контактов устройства через `expo-contacts`, Toast с количеством и именем первого контакта;
+  - кнопка **Create new contact** — форма «Новий контакт» (ім'я, прізвище, телефон) с валидацией и сохранением в адресную книгу (`addContactAsync`);
+  - блок **«Створені контакти»** — список созданных в сессии контактов с кнопками **Редагувати** / **Видалити**;
+  - **редактирование** — форма «Редагувати контакт» с предзаполнением и `updateContactAsync`;
+  - **удаление** — подтверждение «Видалити контакт?» и `removeContactAsync`;
+  - карточки **A–D** — колонка в портрете, ряд в ландшафте (`width > 500`).
+- Экран **Profile**: адаптивная карточка профиля (Черниш Сергій) через хук `useOrientation()` — подробнее в [docs/profile-orientation-task.md](docs/profile-orientation-task.md).
+
+### Разрешения (Android)
+
+В `app.json` подключён плагин `expo-contacts` с разрешениями `READ_CONTACTS` и `WRITE_CONTACTS`. При первом обращении к контактам приложение запрашивает доступ у пользователя.
 
 ## Скриншоты
 
@@ -105,3 +118,53 @@ npm run web         # Web
 Аватар слева, текст справа.
 
 ![Profile — ландшафт](Readme/08-profile-landscape.png)
+
+### 9. Dimensions — создание контакта
+
+Форма «Новий контакт» и список «Створені контакти» под кнопками Notify / Get contact / Create new contact.
+
+![Dimensions — новый контакт](Readme/09-dimensions-create-contact.png)
+
+### 10. Dimensions — редактирование контакта
+
+Режим «Редагувати контакт» с кнопками «Зберегти» и «Скасувати».
+
+![Dimensions — редактирование](Readme/10-dimensions-edit-contact.png)
+
+### 11. Dimensions — подтверждение удаления
+
+Диалог «Видалити контакт?» перед удалением из адресной книги.
+
+![Dimensions — удаление](Readme/11-dimensions-delete-contact.png)
+
+### 12. Dimensions — список контактов
+
+Карточки контактов с кнопками «Редагувати» и «Видалити».
+
+![Dimensions — список контактов](Readme/12-dimensions-contacts-list.png)
+
+### 13. Dimensions — Get contact
+
+Чтение контактов устройства; Toast «Знайдено: N. Перші: …».
+
+![Dimensions — Get contact](Readme/13-dimensions-get-contact.png)
+
+### 14. Dimensions — карточки A–D в ландшафте
+
+Четыре квадратные карточки в ряд при ширине экрана > 500 px.
+
+![Dimensions — ландшафт](Readme/14-dimensions-landscape-cards.png)
+
+## Выполненная работа (сводка)
+
+| Задача | Реализация |
+|--------|------------|
+| Lists | `SectionList` с секциями, карточка, safe area, StatusBar |
+| About | анимированный список, изображение Samuray.jpg, адаптация под ориентацию |
+| Dimensions — layout | карточки A–D: column / row по `useWindowDimensions` |
+| Dimensions — Notify | `expo-notifications` (dynamic import), fallback в Expo Go |
+| Dimensions — контакты | CRUD через `expo-contacts`, форма, список, валидация, Alert при удалении |
+| Profile | отдельная вкладка, `ProfileCard` + `useOrientation()` |
+| Документация | README, скриншоты 01–14, [docs/profile-orientation-task.md](docs/profile-orientation-task.md) |
+
+Репозиторий: [Teslyar75/React_Native_HW](https://github.com/Teslyar75/React_Native_HW)

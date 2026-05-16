@@ -1,5 +1,6 @@
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {
@@ -42,7 +43,7 @@ export default function TabLayout() {
         options={{
           title: "Dimensions",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="phone-portrait-outline" size={24} color={color} />
+            <SimpleLineIcons name="screen-smartphone" size={24} color={color} />
           ),
         }}
       />
