@@ -1,3 +1,4 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -70,6 +71,21 @@ export default function HomeScreen() {
             <Text style={styles.tasksNavButtonText}>Список задач</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            style={styles.databaseNavButton}
+            onPress={() => router.push("/database")}
+          >
+            <Text style={styles.tasksNavButtonText}>База данных</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.restNavButton}
+            onPress={() => router.push("/rest")}
+          >
+            <AntDesign name="api" size={22} color="#fff" />
+            <Text style={styles.tasksNavButtonText}>REST API</Text>
+          </TouchableOpacity>
+
           <View style={styles.switch}>
             <Text style={{ fontSize: 18 }}>Notifications</Text>
             <Switch
@@ -140,6 +156,21 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 17,
     fontWeight: "700",
+  },
+  databaseNavButton: {
+    backgroundColor: "#5856d6",
+    padding: 16,
+    borderRadius: 12,
+    alignItems: "center",
+  },
+  restNavButton: {
+    backgroundColor: "#0f836a",
+    padding: 16,
+    borderRadius: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
   },
   switch: {
     backgroundColor: "#fff",

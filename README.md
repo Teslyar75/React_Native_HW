@@ -10,6 +10,8 @@
 - [expo-router](https://docs.expo.dev/router/introduction/) — file-based роутинг
 - [expo-contacts](https://docs.expo.dev/versions/latest/sdk/contacts/) — чтение и запись контактов устройства
 - [expo-notifications](https://docs.expo.dev/versions/latest/sdk/notifications/) — локальные уведомления (на dev build; в Expo Go — Toast/Alert)
+- [expo-sqlite](https://docs.expo.dev/versions/latest/sdk/sqlite/) — локальная БД товаров
+- [axios](https://axios-http.com/) — HTTP-запросы к JSONPlaceholder
 - TypeScript
 
 ## Структура приложения
@@ -25,7 +27,13 @@ app/
     ├── list.tsx         # SectionList с категориями
     ├── dimension.tsx    # Notify, Get contact, переход к контактам, карточки A–D
     ├── contacts.tsx     # форма и CRUD контактов (скрытый маршрут)
+    ├── database.tsx     # CRUD товаров (SQLite)
+    ├── rest.tsx         # REST API (JSONPlaceholder + axios)
     └── profile.tsx      # адаптивная карточка профиля
+
+lib/
+  bd.ts                  # менеджер SQLite (products)
+  fakeApi.tsx            # axios-клиент для posts
 
 hooks/
   useOrientation.ts      # 'portrait' | 'landscape'
@@ -47,7 +55,7 @@ npm run web         # Web
 ## Возможности
 
 - Главный экран с приветствием, набором кнопок (`Subscribe`, `Show Toast`, `Default Button`), переключателем уведомлений и полем ввода.
-- Переход на экран **«Список задач»** через кнопку.
+- Переход на экраны **«Список задач»**, **«База данных»** и **«REST API»** с главной страницы.
 - На экране задач:
   - добавление задачи (поддерживаются кириллица и латиница);
   - **валидация** — нельзя добавить пустую задачу (модалка «Помилка»);
@@ -69,6 +77,17 @@ npm run web         # Web
   - **удаление** — подтверждение «Видалити контакт?» и `removeContactAsync`;
   - кнопка **«‹ Назад»** — возврат на Dimensions.
 - Экран **Profile**: адаптивная карточка профиля (Черниш Сергій) через хук `useOrientation()` — подробнее в [docs/profile-orientation-task.md](docs/profile-orientation-task.md).
+- Экран **База данных** (`database.tsx`, с главной по кнопке):
+  - **Create** — форма (название, описание, цена) → SQLite `shop.db`;
+  - **Read** — список товаров и просмотр карточки (модальное окно);
+  - **Update** — редактирование в списке (кнопки «Сохранить» / «Отмена»);
+  - **Delete** — мягкое удаление с подтверждением.
+- Экран **REST API** (`rest.tsx`, с главной по кнопке):
+  - GET — загрузка 100 постов с [jsonplaceholder.typicode.com/posts](https://jsonplaceholder.typicode.com/posts);
+  - форма **создания** поста (POST);
+  - форма **обновления** поста (POST) — при успехе пост из ответа API добавляется в начало списка;
+  - PUT / DELETE для демонстрации методов;
+  - `ActivityIndicator` при загрузке и pull-to-refresh.
 
 ### Разрешения (Android)
 
@@ -148,6 +167,36 @@ npm run web         # Web
 
 ![Dimensions — ландшафт](Readme/12-dimensions-landscape-cards.png)
 
+### 13. База данных — список товаров (CRUD)
+
+Экран SQLite: форма **Create — додати товар** и карточки с кнопками **Read**, **Update**, **Delete**.
+
+![База данных — список](Readme/13-database-products-list.png)
+
+### 14. База данных — обновление товара (Update)
+
+Режим редактирования: поля названия, описания, цены и кнопки «Сохранить» / «Отмена».
+
+![База данных — Update](Readme/14-database-update.png)
+
+### 15. База данных — подтверждение удаления (Delete)
+
+Модальное окно «Удалить?» перед удалением товара из списка.
+
+![База данных — Delete](Readme/15-database-delete-confirm.png)
+
+### 16. REST API — формы POST
+
+Формы создания и обновления поста; запросы через `axios` (`lib/fakeApi.tsx`) к JSONPlaceholder.
+
+![REST API — формы](Readme/16-rest-api-forms.png)
+
+### 17. REST API — список постов с сервера
+
+Успешный GET: «получено 100 постов», список с пагинацией «Ещё 10» и кнопкой «У форму оновлення».
+
+![REST API — список постов](Readme/17-rest-api-posts-list.png)
+
 ## Выполненная работа (сводка)
 
 | Задача | Реализация |
@@ -158,6 +207,8 @@ npm run web         # Web
 | Dimensions — Notify | `expo-notifications` (dynamic import), fallback в Expo Go |
 | Dimensions — контакты | CRUD на экране `contacts.tsx`, переход с Dimensions |
 | Profile | отдельная вкладка, `ProfileCard` + `useOrientation()` |
-| Документация | README, скриншоты 01–12, [docs/profile-orientation-task.md](docs/profile-orientation-task.md) |
+| База данных — CRUD | `lib/bd.ts`, экран `database.tsx`, SQLite `shop.db` |
+| REST API | `lib/fakeApi.tsx` (axios), экран `rest.tsx`, форма оновлення POST |
+| Документация | README, скриншоты 01–17, [docs/profile-orientation-task.md](docs/profile-orientation-task.md) |
 
 Репозиторий: [Teslyar75/React_Native_HW](https://github.com/Teslyar75/React_Native_HW)

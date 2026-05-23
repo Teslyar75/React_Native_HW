@@ -71,6 +71,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="database"
+        options={{
+          href: null,
+          title: "База данных",
+        }}
+      />
+      <Tabs.Screen
+        name="rest"
+        options={{
+          href: null,
+          title: "REST API",
+        }}
+      />
+      <Tabs.Screen
         name="image"
         options={{
           href: null,
